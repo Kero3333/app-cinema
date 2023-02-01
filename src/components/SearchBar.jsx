@@ -6,7 +6,7 @@ export const SearchBar = ({ navigation }) => {
 
   const onPressSearch = () => {
     console.log(search);
-    // navigation.navigate("Home");
+    navigation.navigate("List", { search: search });
   };
 
   return (

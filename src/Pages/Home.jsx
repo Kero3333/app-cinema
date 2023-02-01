@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { SearchBar } from "./SearchBar";
+import { SearchBar } from "../components/SearchBar";
 
 export const Home = ({ navigation }) => {
   return (
