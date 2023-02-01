@@ -13,10 +13,10 @@ export const Details = ({ route }) => {
   const { width } = useWindowDimensions();
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>{show.name}</Text>
       <Image source={{ uri: show.image?.original }} style={styles.image} />
-      <View>
+      <View style={styles.synopsis}>
         <Text>Synopsis</Text>
         <RenderHtml
           source={{ html: show.summary ?? "<b>There is no summary</b>" }}
@@ -35,6 +35,9 @@ export const Details = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
   image: {
     height: 300,
     width: 200,

@@ -12,8 +12,8 @@ export const Show = ({ nav, show }) => {
   };
 
   return (
-    <View>
-      <TouchableHighlight activeOpacity={1} onPress={onPressShow}>
+    <View style={styles.container}>
+      <TouchableHighlight activeOpacity={0.2} onPress={onPressShow}>
         <View>
           <Image
             source={{
@@ -21,7 +21,7 @@ export const Show = ({ nav, show }) => {
             }}
             style={styles.image}
           />
-          <Text>{show.name}</Text>
+          <Text style={styles.title}>{show.name}</Text>
         </View>
       </TouchableHighlight>
     </View>
@@ -29,8 +29,17 @@ export const Show = ({ nav, show }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    margin: 10,
+    alignItems: "center",
+  },
   image: {
     height: 150,
     width: 150,
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
   },
 });
