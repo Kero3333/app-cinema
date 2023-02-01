@@ -5,7 +5,6 @@ export const SearchBar = ({ navigation }) => {
   const [search, setSearch] = React.useState("");
 
   const onPressSearch = () => {
-    console.log(search);
     navigation.navigate("List", { search: search });
   };
 

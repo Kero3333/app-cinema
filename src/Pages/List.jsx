@@ -1,5 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
+import { Show } from "../components/Show";
 
 export const List = ({ navigation, route }) => {
   const { search } = route.params;
@@ -18,7 +19,7 @@ export const List = ({ navigation, route }) => {
       <Text>Resultats de {search} :</Text>
       <FlatList
         data={shows}
-        renderItem={({ item }) => <Text>{item.show.name}</Text>}
+        renderItem={({ item }) => <Show show={item.show} />}
         keyExtractor={(item) => item.show.id}
       />
     </View>
