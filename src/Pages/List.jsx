@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import { Show } from "../components/Show";
 
@@ -19,9 +19,11 @@ export const List = ({ navigation, route }) => {
       <Text>Resultats de {search} :</Text>
       <FlatList
         data={shows}
-        renderItem={({ item }) => <Show show={item.show} />}
+        renderItem={({ item }) => <Show show={item.show} nav={navigation} />}
         keyExtractor={(item) => item.show.id}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({});

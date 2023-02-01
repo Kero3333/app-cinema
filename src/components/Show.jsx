@@ -6,9 +6,9 @@ import {
   StyleSheet,
 } from "react-native";
 
-export const Show = ({ navigation, show }) => {
+export const Show = ({ nav, show }) => {
   const onPressShow = () => {
-    // navigation.navigate("Show", { show: show });
+    nav.navigate("Details", { show });
   };
 
   return (
