@@ -8,13 +8,34 @@ import {
   ScrollView,
 } from "react-native";
 import RenderHtml from "react-native-render-html";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { contextAccount } from "../components/Context";
+import React from "react";
 
 export const Details = ({ route }) => {
   const { show } = route.params;
   const { width } = useWindowDimensions();
 
+  const { liked, setLiked } = React.useContext(contextAccount);
+
+  const handlePressLike = () => {
+    liked.indexOf(show.id) < 0
+      ? setLiked((prev) => [...prev, show.id])
+      : setLiked((prev) => prev.filter((id) => id != show.id));
+
+    console.log(liked);
+  };
+
+  React.useEffect(() => {
+    console.log(liked);
+    console.log(liked.indexOf(show.id));
+  }, []);
+
+  const isLiked = () => {
+    return liked.indexOf(show.id) >= 0 ? "heart" : "hearto";
+  };
+
   return (
-    // <View style={styles.container}>
     <ScrollView style={{ width: width, marginBottom: 20 }}>
       <View style={styles.container}>
         <Text style={styles.title}>{show.name}</Text>
@@ -35,9 +56,22 @@ export const Details = ({ route }) => {
             renderItem={({ item, index }) => <Text>{item}</Text>}
           />
         </View>
+        <View style={styles.heart}>
+          <AntDesign.Button
+            name={isLiked()}
+            activeOpacity={1}
+            size={30}
+            iconStyle={{
+              color: "red",
+              marginHorizontal: 10,
+            }}
+            style={{ width: "100%", padding: 0 }}
+            backgroundColor="transparent"
+            onPress={handlePressLike}
+          />
+        </View>
       </View>
     </ScrollView>
-    // </View>
   );
 };
 
@@ -64,5 +98,10 @@ const styles = StyleSheet.create({
   },
   genres: {
     flexDirection: "row",
+  },
+  heart: {
+    position: "absolute",
+    top: 20,
+    right: 10,
   },
 });
