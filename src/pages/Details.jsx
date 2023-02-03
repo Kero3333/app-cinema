@@ -19,9 +19,9 @@ export const Details = ({ route }) => {
   const { liked, setLiked } = React.useContext(contextAccount);
 
   const handlePressLike = () => {
-    liked.indexOf(show.id) < 0
-      ? setLiked((prev) => [...prev, show.id])
-      : setLiked((prev) => prev.filter((id) => id != show.id));
+    liked.find((item) => item.id === show.id)
+      ? setLiked((prev) => prev.filter((item) => item.id != show.id))
+      : setLiked((prev) => [...prev, { id: show.id, show }]);
 
     console.log(liked);
   };
@@ -32,7 +32,7 @@ export const Details = ({ route }) => {
   }, []);
 
   const isLiked = () => {
-    return liked.indexOf(show.id) >= 0 ? "heart" : "hearto";
+    return liked.find((item) => item.id === show.id) ? "heart" : "hearto";
   };
 
   return (

@@ -30,7 +30,7 @@ export const Show = ({ nav, show }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    // width: "100%",
     margin: 10,
     alignItems: "center",
   },
