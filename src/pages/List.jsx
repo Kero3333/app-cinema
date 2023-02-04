@@ -19,7 +19,7 @@ export const List = ({ navigation, route }) => {
 
   return (
     <View style={{ alignItems: "center", height: "auto", marginBottom: 30 }}>
-      <Text style={styles.result}>Results of {search} :</Text>
+      {/* <Text style={styles.result}>Results of {search} :</Text> */}
       <FlatList
         numColumns={2}
         columnWrapperStyle={{ width: "45%", margin: 0 }}

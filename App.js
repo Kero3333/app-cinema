@@ -18,7 +18,7 @@ export default function App() {
   const [liked, setLiked] = React.useState([]);
   const db = SQlite.openDatabase("database.db");
 
-  const accountIcon = ({ navigation }) => ({
+  const accountIcon = ({ navigation, route }) => ({
     headerRight: () => (
       <MaterialIcons
         name="account-circle"
@@ -27,6 +27,9 @@ export default function App() {
         onPress={() => navigation.navigate("Account")}
       />
     ),
+    title: route.params
+      ? route.params.show?.name ?? `Results of ${route.params.search}`
+      : "CinemApp",
   });
 
   React.useEffect(() => {

@@ -49,54 +49,54 @@ export const Details = ({ route }) => {
     return liked.find((item) => item.show?.id === show.id) ? "heart" : "hearto";
   };
 
-  React.useEffect(() => {
-    console.log(liked);
-  }, []);
-
   return (
-    <ScrollView style={{ width: width, marginBottom: 20 }}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{show.name}</Text>
-        <Image
-          source={
-            show.image
-              ? { uri: show.image.original }
-              : require("../../assets/unavailable.jpeg")
-          }
-          style={styles.image}
+    <>
+      <ScrollView style={{ width: width, marginBottom: 20 }}>
+        <View style={styles.container}>
+          <Text style={styles.title}>{show.name}</Text>
+          <Image
+            source={
+              show.image
+                ? { uri: show.image.original }
+                : require("../../assets/unavailable.jpeg")
+            }
+            style={styles.image}
+          />
+          <View style={styles.synopsis}>
+            <Text style={styles.synopsis.title}>Synopsis</Text>
+            <RenderHtml
+              source={{ html: show.summary ?? "<b>There is no summary</b>" }}
+              contentWidth={width}
+              tagsStyles={styles.tagsStyles}
+              enableExperimentalMarginCollapsing={true}
+            />
+          </View>
+          <View style={styles.genres}>
+            <Text>Genres : </Text>
+            <FlatList
+              horizontal={true}
+              ItemSeparatorComponent={<Text style={{ marginRight: 5 }}>,</Text>}
+              data={show.genres}
+              renderItem={({ item, index }) => <Text>{item}</Text>}
+            />
+          </View>
+        </View>
+      </ScrollView>
+      <View style={styles.heart}>
+        <AntDesign.Button
+          name={isLiked()}
+          activeOpacity={1}
+          size={30}
+          iconStyle={{
+            color: "red",
+            marginHorizontal: 10,
+          }}
+          style={{ width: "100%", padding: 0 }}
+          backgroundColor="transparent"
+          onPress={handlePressLike}
         />
-        <View style={styles.synopsis}>
-          <Text style={styles.synopsis.title}>Synopsis</Text>
-          <RenderHtml
-            source={{ html: show.summary ?? "<b>There is no summary</b>" }}
-            contentWidth={width}
-          />
-        </View>
-        <View style={styles.genres}>
-          <Text>Genres : </Text>
-          <FlatList
-            horizontal={true}
-            ItemSeparatorComponent={<Text style={{ marginRight: 5 }}>,</Text>}
-            data={show.genres}
-            renderItem={({ item, index }) => <Text>{item}</Text>}
-          />
-        </View>
-        <View style={styles.heart}>
-          <AntDesign.Button
-            name={isLiked()}
-            activeOpacity={1}
-            size={30}
-            iconStyle={{
-              color: "red",
-              marginHorizontal: 10,
-            }}
-            style={{ width: "100%", padding: 0 }}
-            backgroundColor="transparent"
-            onPress={handlePressLike}
-          />
-        </View>
       </View>
-    </ScrollView>
+    </>
   );
 };
 
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     marginVertical: 20,
+    fontWeight: "bold",
   },
   image: {
     height: 300,
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     title: {
       fontSize: 20,
+      fontWeight: "bold",
     },
   },
   genres: {
@@ -126,7 +128,12 @@ const styles = StyleSheet.create({
   },
   heart: {
     position: "absolute",
-    top: 20,
+    top: 10,
     right: 10,
+  },
+  tagsStyles: {
+    p: {
+      lineHeight: 20,
+    },
   },
 });
