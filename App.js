@@ -24,7 +24,7 @@ export default function App() {
         name="account-circle"
         size={40}
         color={"black"}
-        onPress={() => navigation.navigate("Account", navigation)}
+        onPress={() => navigation.navigate("Account")}
       />
     ),
   });
