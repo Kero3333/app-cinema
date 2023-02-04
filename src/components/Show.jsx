@@ -16,9 +16,13 @@ export const Show = ({ nav, show }) => {
       <TouchableHighlight activeOpacity={0.2} onPress={onPressShow}>
         <View>
           <Image
-            source={{
-              uri: show.image?.medium,
-            }}
+            source={
+              show.image
+                ? {
+                    uri: show.image?.medium,
+                  }
+                : require("../../assets/unvailable.jpeg")
+            }
             style={styles.image}
           />
           <Text style={styles.title}>{show.name}</Text>
