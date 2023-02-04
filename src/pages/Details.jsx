@@ -3,7 +3,7 @@ import {
   Text,
   Image,
   StyleSheet,
-  useWindowDimensions,
+  Dimensions,
   FlatList,
   ScrollView,
 } from "react-native";
@@ -13,9 +13,10 @@ import { contextAccount } from "../components/Context";
 import React from "react";
 import * as SQlite from "expo-sqlite";
 
+const width = Dimensions.get("window").width;
+
 export const Details = ({ route }) => {
   const { show } = route.params;
-  const { width } = useWindowDimensions();
 
   const { liked, setLiked } = React.useContext(contextAccount);
 
@@ -49,11 +50,28 @@ export const Details = ({ route }) => {
     return liked.find((item) => item.show?.id === show.id) ? "heart" : "hearto";
   };
 
+  const showGenres = () => {
+    return show.genres.map((genre) => (
+      <Text
+        style={{
+          backgroundColor: "blue",
+          padding: 2,
+          borderRadius: 5,
+          color: "white",
+          margin: 5,
+        }}
+      >
+        {genre}
+      </Text>
+    ));
+  };
+
   return (
     <>
       <ScrollView style={{ width: width, marginBottom: 20 }}>
         <View style={styles.container}>
           <Text style={styles.title}>{show.name}</Text>
+          <View style={styles.genres}>{showGenres()}</View>
           <Image
             source={
               show.image
@@ -69,15 +87,6 @@ export const Details = ({ route }) => {
               contentWidth={width}
               tagsStyles={styles.tagsStyles}
               enableExperimentalMarginCollapsing={true}
-            />
-          </View>
-          <View style={styles.genres}>
-            <Text>Genres : </Text>
-            <FlatList
-              horizontal={true}
-              ItemSeparatorComponent={<Text style={{ marginRight: 5 }}>,</Text>}
-              data={show.genres}
-              renderItem={({ item, index }) => <Text>{item}</Text>}
             />
           </View>
         </View>
@@ -107,7 +116,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    marginVertical: 20,
+    marginVertical: 15,
     fontWeight: "bold",
   },
   image: {
@@ -125,6 +134,10 @@ const styles = StyleSheet.create({
   },
   genres: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    width: "60%",
+    marginBottom: 10,
   },
   heart: {
     position: "absolute",
