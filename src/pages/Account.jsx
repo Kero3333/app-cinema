@@ -7,7 +7,7 @@ export const Account = ({ navigation }) => {
   const { liked, setLiked } = React.useContext(contextAccount);
 
   const getShows = () => {
-    return liked.map((item) => item.show);
+    return liked?.map((item) => item.show);
   };
 
   React.useEffect(() => {

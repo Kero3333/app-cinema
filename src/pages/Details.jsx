@@ -11,6 +11,7 @@ import RenderHtml from "react-native-render-html";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { contextAccount } from "../components/Context";
 import React from "react";
+import * as SQlite from "expo-sqlite";
 
 export const Details = ({ route }) => {
   const { show } = route.params;
@@ -18,22 +19,39 @@ export const Details = ({ route }) => {
 
   const { liked, setLiked } = React.useContext(contextAccount);
 
-  const handlePressLike = () => {
-    liked.find((item) => item.id === show.id)
-      ? setLiked((prev) => prev.filter((item) => item.id != show.id))
-      : setLiked((prev) => [...prev, { id: show.id, show }]);
+  const db = SQlite.openDatabase("database.db");
 
+  const handlePressLike = () => {
+    if (liked.find((item) => item.show?.id === show.id)) {
+      db.transaction((tx) =>
+        tx.executeSql(
+          "DELETE FROM liked WHERE show = ?",
+          [JSON.stringify(show)],
+          (obj, res) =>
+            setLiked((prev) => prev.filter((item) => item.show?.id != show.id)),
+          (obj, err) => (results = err)
+        )
+      );
+    } else {
+      db.transaction((tx) =>
+        tx.executeSql(
+          "INSERT INTO liked (show) VALUES (?)",
+          [JSON.stringify(show)],
+          (obj, res) => setLiked((prev) => [...prev, { id: show.id, show }]),
+          (obj, err) => (results = err)
+        )
+      );
+    }
     console.log(liked);
+  };
+
+  const isLiked = () => {
+    return liked.find((item) => item.show?.id === show.id) ? "heart" : "hearto";
   };
 
   React.useEffect(() => {
     console.log(liked);
-    console.log(liked.indexOf(show.id));
   }, []);
-
-  const isLiked = () => {
-    return liked.find((item) => item.id === show.id) ? "heart" : "hearto";
-  };
 
   return (
     <ScrollView style={{ width: width, marginBottom: 20 }}>

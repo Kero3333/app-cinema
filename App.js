@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { contextAccount } from "./src/components/Context";
 import React from "react";
+import * as SQlite from "expo-sqlite";
 
 import { Home } from "./src/pages/Home";
 import { List } from "./src/pages/List";
@@ -15,6 +16,7 @@ const stack = createNativeStackNavigator();
 
 export default function App() {
   const [liked, setLiked] = React.useState([]);
+  const db = SQlite.openDatabase("database.db");
 
   const accountIcon = ({ navigation }) => ({
     headerRight: () => (
@@ -26,6 +28,34 @@ export default function App() {
       />
     ),
   });
+
+  React.useEffect(() => {
+    db.transaction((tx) =>
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS liked (show text NOT NULL)",
+        null,
+        (obj, res) => console.log("CREATE => ", res),
+        (obj, err) => console.error(err)
+      )
+    );
+    db.transaction((tx) =>
+      tx.executeSql(
+        "SELECT show FROM liked",
+        null,
+        (obj, res) => {
+          setLiked(
+            res.rows._array.map((item) => {
+              return {
+                show: JSON.parse(item.show),
+              };
+            })
+          );
+          console.log(liked);
+        },
+        (obj, err) => console.error(err)
+      )
+    );
+  }, []);
 
   return (
     <NavigationContainer>
