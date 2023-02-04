@@ -21,7 +21,7 @@ export const Show = ({ nav, show }) => {
                 ? {
                     uri: show.image?.medium,
                   }
-                : require("../../assets/unvailable.jpeg")
+                : require("../../assets/unavailable.jpeg")
             }
             style={styles.image}
           />

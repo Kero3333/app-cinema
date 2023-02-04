@@ -57,7 +57,14 @@ export const Details = ({ route }) => {
     <ScrollView style={{ width: width, marginBottom: 20 }}>
       <View style={styles.container}>
         <Text style={styles.title}>{show.name}</Text>
-        <Image source={{ uri: show.image?.original }} style={styles.image} />
+        <Image
+          source={
+            show.image
+              ? { uri: show.image.original }
+              : require("../../assets/unavailable.jpeg")
+          }
+          style={styles.image}
+        />
         <View style={styles.synopsis}>
           <Text style={styles.synopsis.title}>Synopsis</Text>
           <RenderHtml
